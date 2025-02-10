@@ -1,10 +1,15 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Ocorrencia
+from django.views import View
 from .forms import OcorrenciaForm
 
 
 # Create your views here.
+
+class IndexView(View):
+    def get(self, request):
+        return HttpResponse("Página inicial funcionando!")
+    
 
 def inserir_ocorrencia(request):
     form = OcorrenciaForm(request.POST or None)

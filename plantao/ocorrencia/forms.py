@@ -11,12 +11,12 @@ class DataSolicitacaoForm(forms.ModelForm):
         model = DataSolicitacao
         fields = '__all__'
 
-class Parecer(forms.Modelform):
+class Parecer(forms.ModelForm):
     class Meta:
         model = Parecer
         fields = '__all__'
 
-class SituacaoAguaCliente(forms.ModeForm):
+class SituacaoAguaCliente(forms.ModelForm):
     class Meta:
         model = SituacaoAguaCliente
         fields = '__all__'

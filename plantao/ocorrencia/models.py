@@ -1,6 +1,8 @@
 from django.db import models
 
+
 # Create your models here.
+
 
 class Unidade(models.Model):
     nome = models.CharField(max_length=100, unique=True) 
@@ -8,12 +10,24 @@ class Unidade(models.Model):
     def __str__(self):
         return self.nome
     
+class Matricula(models.Model):
+    codigo = models.IntegerField(unique=True)  
+
+    def __str__(self):
+        return str(self.codigo)  
+    
 class Bairro(models.Model):
     nome = models.CharField(max_length=100)
     unidade = models.ForeignKey(Unidade, on_delete=models.CASCADE, related_name="bairros")
 
     def __str__(self):
         return f"{self.nome} - {self.unidade.nome}"
+
+class OrdemDeServico(models.Model):
+    codigo = models.IntegerField(unique=True)
+    
+    def __str__(self):
+        return str(self.codigo)
 
 class DataSolicitacao(models.Model):
     data = models.DateField()
@@ -33,10 +47,14 @@ class SituacaoAguaCliente(models.Model):
     def __str__(self):
         return self.descricao
     
-class Ocorrencia(models.model):
-    codigo = models.IntegerField(unique=True)
-    
+class Ocorrencia(models.Model):
+    ordem_de_servico = models.ForeignKey(OrdemDeServico, on_delete=models.CASCADE, related_name="ocorrencias", null=True, blank=True)
+    matricula = models.ForeignKey(Matricula, on_delete=models.CASCADE, related_name="ocorrencias", null=True, blank=True)
+    bairro = models.ForeignKey(Bairro, on_delete=models.CASCADE, related_name="ocorrencias", null=True, blank=True)  # Agora é opcional
+    data_solicitacao = models.ForeignKey(DataSolicitacao, on_delete=models.CASCADE, related_name="ocorrencias", null=True, blank=True)
+    parecer = models.ForeignKey(Parecer, on_delete=models.SET_NULL, null=True, blank=True, related_name="ocorrencias")
+    situacao_agua_cliente = models.ForeignKey(SituacaoAguaCliente, on_delete=models.SET_NULL, null=True, blank=True, related_name="ocorrencias")
+    descricao = models.TextField(null=True, blank=True)
+
     def __str__(self):
-        return str(self.codigo)
-    
-    
+        return f"Ocorrência {self.id} - {self.ordem_de_servico.codigo}"

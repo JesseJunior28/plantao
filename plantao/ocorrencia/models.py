@@ -48,10 +48,10 @@ class SituacaoAguaCliente(models.Model):
         return self.descricao
     
 class Ocorrencia(models.Model):
-    ordem_de_servico = models.ForeignKey(OrdemDeServico, on_delete=models.CASCADE, related_name="ocorrencias", null=True, blank=True)
-    matricula = models.ForeignKey(Matricula, on_delete=models.CASCADE, related_name="ocorrencias", null=True, blank=True)
-    bairro = models.ForeignKey(Bairro, on_delete=models.CASCADE, related_name="ocorrencias", null=True, blank=True)  # Agora é opcional
-    data_solicitacao = models.ForeignKey(DataSolicitacao, on_delete=models.CASCADE, related_name="ocorrencias", null=True, blank=True)
+    ordem_de_servico = models.IntegerField(null=True, blank=True)
+    matricula = models.IntegerField(max_length = 20, null=True, blank=True)
+    bairro = models.ForeignKey(Bairro, on_delete=models.CASCADE, related_name="ocorrencias", null=True, blank=True)
+    data_solicitacao = models.DateField(null=True, blank=True)
     parecer = models.ForeignKey(Parecer, on_delete=models.SET_NULL, null=True, blank=True, related_name="ocorrencias")
     situacao_agua_cliente = models.ForeignKey(SituacaoAguaCliente, on_delete=models.SET_NULL, null=True, blank=True, related_name="ocorrencias")
     descricao = models.TextField(null=True, blank=True)

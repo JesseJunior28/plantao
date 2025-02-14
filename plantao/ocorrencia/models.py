@@ -49,11 +49,11 @@ class SituacaoAguaCliente(models.Model):
     
 class Ocorrencia(models.Model):
     ordem_de_servico = models.IntegerField(null=True, blank=True)
-    matricula = models.IntegerField(max_length = 20, null=True, blank=True)
+    matricula = models.IntegerField(null=True, blank=True)
     bairro = models.ForeignKey(Bairro, on_delete=models.CASCADE, related_name="ocorrencias", null=True, blank=True)
     data_solicitacao = models.DateField(null=True, blank=True)
     parecer = models.ForeignKey(Parecer, on_delete=models.SET_NULL, null=True, blank=True, related_name="ocorrencias")
-    situacao_agua_cliente = models.ForeignKey(SituacaoAguaCliente, on_delete=models.SET_NULL, null=True, blank=True, related_name="ocorrencias")
+    situacao_agua_cliente = models.ForeignKey(SituacaoAguaCliente, on_delete=models.SET_NULL, null=True, blank=True, related_name="ocorrencias",)
     descricao = models.TextField(null=True, blank=True)
 
     def __str__(self):

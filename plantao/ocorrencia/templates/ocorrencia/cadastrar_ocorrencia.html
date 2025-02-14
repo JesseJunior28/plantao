@@ -1,12 +1,31 @@
+{% extends 'ocorrencia/modelo.html' %}
+
 {% load static %}
-<h2>
-    Inserir Ocorrencia
-</h2>
 
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
+{% load crispy_forms_tags %}
 
-    <button type="submit"> Salvar Ocorrência </button>
-</form>
 
+
+
+
+{% block conteudo %}
+
+<h1>Ocorrências</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Ordem de Serviço</th> 
+            <th>Matrícula</th>
+            <th>Bairro</th>
+            <th>Data Solicitação</th>
+            <th>Parecer</th>
+            <th>Situação Água Cliente</th>
+            <th>Descrição</th>
+        </tr>
+
+</table>
+
+
+
+{% endblock %}

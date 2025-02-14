@@ -7,8 +7,8 @@ from django.views.generic import TemplateView
 
 # Create your views here.
 
-class IndexView(TemplateView):
-    template_name = "index.html"  
+#class IndexView(TemplateView):
+    #template_name = "index.html"  
 
 def cadastrar_ocorrencia(request):
     form = OcorrenciaForm(request.POST or None)
@@ -16,6 +16,6 @@ def cadastrar_ocorrencia(request):
     if request.method == "POST":
         if form.is_valid():
             form.save()
-            return redirect("Lista_ocorrencias")
+            return redirect("lista_ocorrencias")
         
-    return render(request, "ocorrencias/inserir_ocorrencia.html", {"form": form})
+    return render(request, "ocorrencia/cadastrar_ocorrencia.html", {"form": form})

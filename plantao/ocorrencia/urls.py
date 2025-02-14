@@ -1,7 +1,6 @@
 from django.urls import path
-from .views import IndexView, cadastrar_ocorrencia
+from .views import cadastrar_ocorrencia
 
 urlpatterns = [
-    path('inicio/', IndexView.as_view(), name='inserir_ocorrencia'),
-    path("cadastrar/", cadastrar_ocorrencia, name="cadastrar_ocorrencia"),
+    path('', cadastrar_ocorrencia, name='cadastrar_ocorrencia'),  
 ]

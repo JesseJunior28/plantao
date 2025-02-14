@@ -37,9 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'paginas.apps.PaginasConfig',
-    'ocorrencia.apps.OcorrenciasConfig',
-
+    'ocorrencia.apps.OcorrenciaConfig',
+    
 ]
 
 MIDDLEWARE = [

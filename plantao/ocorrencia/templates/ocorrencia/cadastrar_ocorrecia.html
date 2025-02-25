@@ -1,0 +1,15 @@
+{% extends 'ocorrencia/modelo.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+<h1>Cadastrar Ocorrência</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Salvar</button>
+</form>
+
+<a href="{% url 'lista_ocorrencias' %}">Voltar para a lista</a>

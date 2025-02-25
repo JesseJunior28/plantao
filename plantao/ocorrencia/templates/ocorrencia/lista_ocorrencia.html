@@ -1,0 +1,49 @@
+{% extends 'ocorrencia/modelo.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block conteudo %}
+
+<h1>Listagem de Ocorrências</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Matricula</th>
+            <th>Bairro</th>
+            <th>Ordem de Serviço</th>
+            <th>Data de Solicitação</th>
+            <th>Parecer</th>
+            <th>Status Região</th>
+            <th>Situação Cliente</th>
+            <th>Descrição</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for ocorrencia in ocorrencias %}
+            <tr>
+                <td>{{ ocorrencia.id }}</td>
+                <td>{{ ocorrencia.matricula }}</td>  
+                <td>{{ ocorrencia.bairro }}</td>  
+                <td>{{ ocorrencia.ordem_de_servico.codigo|default:"Sem OS" }}</td>
+                <td>{{ ocorrencia.data_de_solicitacao }}</td>  
+                <td>{{ ocorrencia.parecer }}</td>  
+                <td>{{ ocorrencia.status_regiao }}</td> 
+                <td>{{ ocorrencia.situacao_cliente }}</td>  
+                <td>{{ ocorrencia.descricao }}</td>
+                <td>
+                    <a href="{% url 'editar_ocorrencia' ocorrencia.id %}" class="btn btn-primary btn-sm">Editar</a>
+                    <a href="{% url 'excluir_ocorrencia' ocorrencia.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir?');">Excluir</a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="10">Nenhuma ocorrência cadastrada.</td>  
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

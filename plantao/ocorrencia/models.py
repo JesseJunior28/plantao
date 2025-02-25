@@ -48,13 +48,14 @@ class SituacaoAguaCliente(models.Model):
         return self.descricao
     
 class Ocorrencia(models.Model):
-    ordem_de_servico = models.IntegerField(null=True, blank=True)
-    matricula = models.IntegerField(null=True, blank=True)
+    ordem_de_servico = models.ForeignKey(OrdemDeServico, on_delete=models.SET_NULL, null=True, blank=True, related_name="ocorrencias")
+    matricula = models.ForeignKey(Matricula, on_delete=models.SET_NULL, null=True, blank=True, related_name="ocorrencias")
     bairro = models.ForeignKey(Bairro, on_delete=models.CASCADE, related_name="ocorrencias", null=True, blank=True)
     data_solicitacao = models.DateField(null=True, blank=True)
     parecer = models.ForeignKey(Parecer, on_delete=models.SET_NULL, null=True, blank=True, related_name="ocorrencias")
-    situacao_agua_cliente = models.ForeignKey(SituacaoAguaCliente, on_delete=models.SET_NULL, null=True, blank=True, related_name="ocorrencias",)
+    situacao_agua_cliente = models.ForeignKey(SituacaoAguaCliente, on_delete=models.SET_NULL, null=True, blank=True, related_name="ocorrencias")
     descricao = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return f"Ocorrência {self.id} - {self.ordem_de_servico.codigo}"
+        ordem_codigo = self.ordem_de_servico.codigo if self.ordem_de_servico else "Sem OS"
+        return f"Ocorrência {self.id} - {ordem_codigo}"

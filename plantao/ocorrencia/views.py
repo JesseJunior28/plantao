@@ -1,5 +1,4 @@
 from django.shortcuts import get_object_or_404, render, redirect
-from django.http import HttpResponse
 from .models import Ocorrencia 
 from .forms import OcorrenciaForm
 
@@ -19,7 +18,7 @@ def cadastrar_ocorrencia(request):
     if request.method == "POST":
         if form.is_valid():
             form.save()
-            return redirect("lista_ocorrencias")
+            return redirect("lista_ocorrencia")
         
     return render(request, "ocorrencia/cadastrar_ocorrencia.html", {"form": form})
 
@@ -30,7 +29,7 @@ def editar_ocorrencia(request, id):
         form = OcorrenciaForm(request.POST, instance=ocorrencia)
         if form.is_valid():
             form.save()
-            return redirect('lista_ocorrencias')
+            return redirect('lista_ocorrencia')
     else:
         form = OcorrenciaForm(instance=ocorrencia)
     return render(request, 'ocorrencia/editar_ocorrencia.html', {'form': form})
@@ -38,5 +37,5 @@ def editar_ocorrencia(request, id):
 def excluir_ocorrencia(request, id):
     ocorrencia = get_object_or_404(Ocorrencia, id=id)
     ocorrencia.delete()
-    return redirect('lista_ocorrencias')
+    return redirect('lista_ocorrencia')
 

@@ -4,12 +4,11 @@
 
 {% load crispy_forms_tags %}
 
+{% block conteudo %}
 <h1>Cadastrar Ocorrência</h1>
-
 <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Salvar</button>
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-primary">Salvar</button>
 </form>
-
-<a href="{% url 'lista_ocorrencias' %}">Voltar para a lista</a>
+{% endblock %}

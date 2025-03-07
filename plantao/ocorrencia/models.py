@@ -41,6 +41,12 @@ class Parecer(models.Model):
     def __str__(self):
         return self.descricao
     
+class StatusRegiao(models.Model):
+    descricao = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.descricao
+    
 class SituacaoAguaCliente(models.Model):
     descricao = models.CharField(max_length=100)
 
@@ -55,6 +61,7 @@ class Ocorrencia(models.Model):
     data_solicitacao = models.DateField(null=True, blank=True)
     parecer = models.ForeignKey(Parecer, on_delete=models.SET_NULL, null=True, blank=True, related_name="ocorrencias")
     situacao_agua_cliente = models.ForeignKey(SituacaoAguaCliente, on_delete=models.SET_NULL, null=True, blank=True, related_name="ocorrencias")
+    status_regiao = models.ForeignKey(StatusRegiao, on_delete=models.SET_NULL, null=True, blank=True, related_name="ocorrencias")
     descricao = models.TextField(null=True, blank=True)
 
     def __str__(self):

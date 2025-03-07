@@ -30,11 +30,11 @@
                 <td>{{ ocorrencia.id }}</td>
                 <td>{{ ocorrencia.matricula }}</td>  
                 <td>{{ ocorrencia.bairro }}</td>  
-                <td>{{ ocorrencia.ordem_de_servico.codigo|default:"Sem OS" }}</td>
-                <td>{{ ocorrencia.data_de_solicitacao }}</td>  
+                <td>{{ ocorrencia.ordem_de_servico|default:"Sem OS" }}</td>
+                <td>{{ ocorrencia.data_solicitacao }}</td>  
                 <td>{{ ocorrencia.parecer }}</td>  
                 <td>{{ ocorrencia.status_regiao }}</td> 
-                <td>{{ ocorrencia.situacao_cliente }}</td>  
+                <td>{{ ocorrencia.situacao_agua_cliente }}</td>  
                 <td>{{ ocorrencia.descricao }}</td>
                 <td>
                     <a href="{% url 'editar_ocorrencia' ocorrencia.id %}" class="btn btn-primary btn-sm">Editar</a>

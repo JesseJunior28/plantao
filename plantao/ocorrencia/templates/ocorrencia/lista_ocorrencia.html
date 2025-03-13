@@ -33,7 +33,7 @@
                 <td>{{ ocorrencia.ordem_de_servico|default:"Sem OS" }}</td>
                 <td>{{ ocorrencia.data_solicitacao }}</td>  
                 <td>{{ ocorrencia.parecer }}</td>  
-                <td>{{ ocorrencia.status_regiao }}</td> 
+                <td>{{ ocorrencia.status_regiao|default:"" }}</td> 
                 <td>{{ ocorrencia.situacao_agua_cliente }}</td>  
                 <td>{{ ocorrencia.descricao }}</td>
                 <td>

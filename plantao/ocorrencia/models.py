@@ -55,14 +55,14 @@ class SituacaoAguaCliente(models.Model):
     
 
 class Ocorrencia(models.Model):
-    ordem_de_servico = models.IntegerField(null=True, blank=True)
-    matricula = models.IntegerField(null=True, blank=True)
-    bairro = models.ForeignKey(Bairro, on_delete=models.CASCADE, related_name="ocorrencias", null=True, blank=True)
-    data_solicitacao = models.DateField(null=True, blank=True)
-    parecer = models.ForeignKey(Parecer, on_delete=models.SET_NULL, null=True, blank=True, related_name="ocorrencias")
-    situacao_agua_cliente = models.ForeignKey(SituacaoAguaCliente, on_delete=models.SET_NULL, null=True, blank=True, related_name="ocorrencias")
-    status_regiao = models.ForeignKey(StatusRegiao, on_delete=models.SET_NULL, null=True, blank=True, related_name="ocorrencias")
-    descricao = models.TextField(null=True, blank=True)
+    ordem_de_servico = models.IntegerField()
+    matricula = models.IntegerField()
+    bairro = models.ForeignKey(Bairro, on_delete=models.CASCADE, related_name="ocorrencias")
+    data_solicitacao = models.DateField()
+    parecer = models.ForeignKey(Parecer, on_delete=models.SET_NULL, null=True, related_name="ocorrencias")
+    situacao_agua_cliente = models.ForeignKey(SituacaoAguaCliente, on_delete=models.SET_NULL,null=True, related_name="ocorrencias")
+    status_regiao = models.ForeignKey(StatusRegiao, on_delete=models.SET_NULL, null=True, related_name="ocorrencias")
+    descricao = models.TextField()
 
     def __str__(self):
         ordem_codigo = self.ordem_de_servico if self.ordem_de_servico else "Sem OS"

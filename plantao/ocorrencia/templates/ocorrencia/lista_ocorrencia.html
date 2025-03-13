@@ -27,15 +27,15 @@
     <tbody>
         {% for ocorrencia in ocorrencias %}
             <tr>
-                <td>{{ ocorrencia.id }}</td>
-                <td>{{ ocorrencia.matricula }}</td>  
-                <td>{{ ocorrencia.bairro }}</td>  
+                <td>{{ ocorrencia.id|default:"" }}</td>
+                <td>{{ ocorrencia.matricula|default:"" }}</td>  
+                <td>{{ ocorrencia.bairro|default:"" }}</td>  
                 <td>{{ ocorrencia.ordem_de_servico|default:"Sem OS" }}</td>
-                <td>{{ ocorrencia.data_solicitacao }}</td>  
-                <td>{{ ocorrencia.parecer }}</td>  
+                <td>{{ ocorrencia.data_solicitacao|default:"" }}</td>  
+                <td>{{ ocorrencia.parecer|default:"" }}</td>  
                 <td>{{ ocorrencia.status_regiao|default:"" }}</td> 
-                <td>{{ ocorrencia.situacao_agua_cliente }}</td>  
-                <td>{{ ocorrencia.descricao }}</td>
+                <td>{{ ocorrencia.situacao_agua_cliente|default:"" }}</td>  
+                <td>{{ ocorrencia.descricao|default:"" }}</td>
                 <td>
                     <a href="{% url 'editar_ocorrencia' ocorrencia.id %}" class="btn btn-primary btn-sm">Editar</a>
                     <a href="{% url 'excluir_ocorrencia' ocorrencia.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir?');">Excluir</a>

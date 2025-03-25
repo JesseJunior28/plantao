@@ -6,6 +6,12 @@ class OcorrenciaForm(forms.ModelForm):
     class Meta: 
         model = Ocorrencia
         fields = '__all__'
+        widgets = {
+            "bairro": forms.Select(attrs={'class': 'form-control'}),
+            "parecer": forms.Select(attrs={'class': 'form-control'}),
+            "situacao_agua_cliente": forms.Select(attrs={'class': 'form-control'}),
+            "status_regiao": forms.Select(attrs={'class': 'form-control'}),
+        }
 
 class DataSolicitacaoForm(forms.ModelForm):
     class Meta:

@@ -5,9 +5,17 @@
 {% block conteudo %}
 
 <h1>Listagem de Ocorrências</h1>
-<a href="{% url 'cadastrar_ocorrencia' %}" class="btn btn-success">Cadastrar Ocorrência</a> 
 
 
+
+<div class="row mb-4">
+<div class="col text-right">
+<a href="{% url 'cadastrar_ocorrencia' %}" class="btn btn-primary">Cadastrar Ocorrência</a> 
+</div>
+</div>
+
+<div class="row">
+<div class="col">
 
 <table class="table table-striped">
     <thead>
@@ -15,12 +23,11 @@
             <th>ID</th>
             <th>Matricula</th>
             <th>Bairro</th>
-            <th>Ordem de Serviço</th>
-            <th>Data de Solicitação</th>
+            <th>OS</th>
+            <th>Solicitação</th>
             <th>Parecer</th>
-            <th>Status Região</th>
-            <th>Situação Cliente</th>
-            <th>Descrição</th>
+            <th>Status</th>
+            <th>Situação</th>
             <th>Ações</th>
         </tr>
     </thead>
@@ -31,14 +38,15 @@
                 <td>{{ ocorrencia.matricula|default:"" }}</td>  
                 <td>{{ ocorrencia.bairro|default:"" }}</td>  
                 <td>{{ ocorrencia.ordem_de_servico|default:"Sem OS" }}</td>
-                <td>{{ ocorrencia.data_solicitacao|default:"" }}</td>  
+                <td>{{ ocorrencia.data_solicitacao|date:"d/m/Y"|default:"" }}</td>  
                 <td>{{ ocorrencia.parecer|default:"" }}</td>  
                 <td>{{ ocorrencia.status_regiao|default:"" }}</td> 
                 <td>{{ ocorrencia.situacao_agua_cliente|default:"" }}</td>  
-                <td>{{ ocorrencia.descricao|default:"" }}</td>
                 <td>
-                    <a href="{% url 'editar_ocorrencia' ocorrencia.id %}" class="btn btn-primary btn-sm">Editar</a>
+                <div class="btn-group" role="group" >
+                    <a href="{% url 'editar_ocorrencia' ocorrencia.id %}" class="btn btn-secondary btn-sm">Editar</a>
                     <a href="{% url 'excluir_ocorrencia' ocorrencia.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir?');">Excluir</a>
+                    </div>
                 </td>
             </tr>
         {% empty %}
@@ -48,5 +56,10 @@
         {% endfor %}
     </tbody>
 </table>
+
+
+</div>
+</div>
+
 
 {% endblock %}

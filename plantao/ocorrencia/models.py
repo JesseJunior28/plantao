@@ -53,6 +53,11 @@ class SituacaoAguaCliente(models.Model):
     def __str__(self):
         return self.descricao
     
+class StatusOcorrencia(models.Model):
+    descricao = models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.descricao    
 
 class Ocorrencia(models.Model):
     ordem_de_servico = models.IntegerField()
@@ -62,6 +67,7 @@ class Ocorrencia(models.Model):
     parecer = models.ForeignKey(Parecer, on_delete=models.SET_NULL, null=True, related_name="ocorrencias")
     situacao_agua_cliente = models.ForeignKey(SituacaoAguaCliente, on_delete=models.SET_NULL,null=True, related_name="ocorrencias")
     status_regiao = models.ForeignKey(StatusRegiao, on_delete=models.SET_NULL, null=True, related_name="ocorrencias")
+    status_ocorrencia = models.ForeignKey(StatusOcorrencia, on_delete=models.SET_NULL, null=True, related_name="ocorrencias")
     descricao = models.TextField()
 
     def __str__(self):

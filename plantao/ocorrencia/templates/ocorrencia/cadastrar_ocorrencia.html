@@ -7,14 +7,14 @@
 {% block conteudo %}
 <div class="row">
 
-<div class="col-6">
-    <h1>Cadastrar Ocorrência</h1>
-    <form method="post">
-        {% csrf_token %}
-        {% crispy form %}
-        <a href="{% url 'lista_ocorrencia' %}" class="btn btn-secondary">Cancelar</a>
-        <button type="submit" class="btn btn-primary">Salvar</button>
-    </form>
+    <div class="col-6">
+        <h1>Cadastrar Ocorrência</h1>
+        <form method="post" action="">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <a href="{% url 'lista_ocorrencia' %}" class="btn btn-secondary">Cancelar</a>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </form>
+    </div>
 </div>
-</div
 {% endblock %}

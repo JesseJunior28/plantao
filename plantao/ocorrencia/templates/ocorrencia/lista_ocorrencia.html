@@ -4,62 +4,115 @@
 
 {% block conteudo %}
 
-<h1>Listagem de Ocorrências</h1>
 
 
+<div class="container mt-3">
+    
 
-<div class="row mb-4">
-<div class="col text-right">
-<a href="{% url 'cadastrar_ocorrencia' %}" class="btn btn-primary">Cadastrar Ocorrência</a> 
-</div>
-</div>
+    <div class="row mt-3">
+        <div class="col">
 
-<div class="row">
-<div class="col">
+            <h2 class="mb-4">Informações do Plantão</h2>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Matricula</th>
-            <th>Bairro</th>
-            <th>OS</th>
-            <th>Solicitação</th>
-            <th>Parecer</th>
-            <th>Status</th>
-            <th>Situação</th>
-            <th>Ações</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for ocorrencia in ocorrencias %}
+        </div>
+    </div>
+
+    <div class="row mt-2 mb-2">
+        <div class="col-4 ">
+            
+
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <span><strong>NOME DO PROGRAMADOR:</strong></span>
+                <span>Wesley Bruno</span>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <span><strong>TIPO DE ACESSO:</strong></span>
+                <span>coi</span>
+            </div>
+
+            
+
+            <div class="d-flex justify-content-between align-items-start">
+                <span><strong>OCORRÊNCIAS EM ABERTO:</strong></span>
+                <span>0</span>
+            </div>
+        </div>
+        
+
+        <div class="col-4">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <span><strong>DATA/HORA DE INÍCIO:</strong></span>
+                <span>25/03/2025, 11:06:39</span>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <span><strong>STATUS DO PLANTÃO:</strong></span>
+                <span>ATIVO</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col">
+
+            <h2>Listagem de Ocorrências</h2>
+
+        </div>
+    </div>
+
+    <div class="row mb-4">
+    <div class="col text-right">
+    <a href="{% url 'cadastrar_ocorrencia' %}" class="btn btn-primary">Cadastrar Ocorrência</a> 
+    </div>
+    </div>
+
+    <div class="row">
+    <div class="col">
+
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <td>{{ ocorrencia.id|default:"" }}</td>
-                <td>{{ ocorrencia.matricula|default:"" }}</td>  
-                <td>{{ ocorrencia.bairro|default:"" }}</td>  
-                <td>{{ ocorrencia.ordem_de_servico|default:"Sem OS" }}</td>
-                <td>{{ ocorrencia.data_solicitacao|date:"d/m/Y"|default:"" }}</td>  
-                <td>{{ ocorrencia.parecer|default:"" }}</td>  
-                <td>{{ ocorrencia.status_regiao|default:"" }}</td> 
-                <td>{{ ocorrencia.situacao_agua_cliente|default:"" }}</td>  
-                <td>
-                <div class="btn-group" role="group" >
-                    <a href="{% url 'editar_ocorrencia' ocorrencia.id %}" class="btn btn-secondary btn-sm">Editar</a>
-                    <a href="{% url 'excluir_ocorrencia' ocorrencia.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir?');">Excluir</a>
-                    </div>
-                </td>
+                <th>ID</th>
+                <th>Matricula</th>
+                <th>Bairro</th>
+                <th>OS</th>
+                <th>Solicitação</th>
+                <th>Parecer</th>
+                <th>Status</th>
+                <th>Situação</th>
+                <th>Ações</th>
             </tr>
-        {% empty %}
-            <tr>
-                <td colspan="10">Nenhuma ocorrência cadastrada.</td>  
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            {% for ocorrencia in ocorrencias %}
+                <tr>
+                    <td>{{ ocorrencia.id|default:"" }}</td>
+                    <td>{{ ocorrencia.matricula|default:"" }}</td>  
+                    <td>{{ ocorrencia.bairro|default:"" }}</td>  
+                    <td>{{ ocorrencia.ordem_de_servico|default:"Sem OS" }}</td>
+                    <td>{{ ocorrencia.data_solicitacao|date:"d/m/Y"|default:"" }}</td>  
+                    <td>{{ ocorrencia.parecer|default:"" }}</td>  
+                    <td>{{ ocorrencia.status_regiao|default:"" }}</td> 
+                    <td>{{ ocorrencia.situacao_agua_cliente|default:"" }}</td>  
+                    <td>
+                    <div class="btn-group" role="group" >
+                        <a href="{% url 'editar_ocorrencia' ocorrencia.id %}" class="btn btn-secondary btn-sm">Editar</a>
+                        <a href="{% url 'excluir_ocorrencia' ocorrencia.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir?');">Excluir</a>
+                        </div>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="10">Nenhuma ocorrência cadastrada.</td>  
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
 
+    </div>
+    </div>
 </div>
-</div>
-
 
 {% endblock %}

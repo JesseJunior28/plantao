@@ -31,16 +31,10 @@
                 <span>coi</span>
             </div>
 
-            
-
-            <div class="d-flex justify-content-between align-items-start">
-                <span><strong>OCORRÊNCIAS EM ABERTO:</strong></span>
-                <span>0</span>
-            </div>
         </div>
         
 
-        <div class="col-4">
+        <div class="col-4 ">
             <div class="d-flex justify-content-between align-items-start mb-2">
                 <span><strong>DATA/HORA DE INÍCIO:</strong></span>
                 <span>25/03/2025, 11:06:39</span>
@@ -49,6 +43,12 @@
             <div class="d-flex justify-content-between align-items-start mb-2">
                 <span><strong>STATUS DO PLANTÃO:</strong></span>
                 <span>ATIVO</span>
+            </div>
+        </div>
+        <div class="col-4 ">
+            <div class="d-flex justify-content-between align-items-start">
+                <span><strong>OCORRÊNCIAS EM ABERTO:</strong></span>
+                <span>0</span>
             </div>
         </div>
     </div>
@@ -62,9 +62,9 @@
     </div>
 
     <div class="row mb-4">
-    <div class="col text-right">
-    <a href="{% url 'cadastrar_ocorrencia' %}" class="btn btn-primary">Cadastrar Ocorrência</a> 
-    </div>
+        <div class="col text-end">
+            <a href="{% url 'cadastrar_ocorrencia' %}" class="btn btn-primary">Cadastrar Ocorrência</a> 
+        </div>
     </div>
 
     <div class="row">

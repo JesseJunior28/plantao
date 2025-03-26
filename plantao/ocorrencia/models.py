@@ -57,7 +57,10 @@ class StatusOcorrencia(models.Model):
     descricao = models.CharField(max_length=10)
 
     def __str__(self):
-        return self.descricao    
+        return self.descricao  
+
+class Comentario(models.Model):
+    descricao = models.CharField(max_length=200)  
 
 class Ocorrencia(models.Model):
     ordem_de_servico = models.IntegerField()

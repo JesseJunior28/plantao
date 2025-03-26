@@ -3,7 +3,7 @@ from django.contrib import admin
 
 # Importar as classes
 
-from .models import Unidade, Bairro, Ocorrencia, DataSolicitacao, Parecer, SituacaoAguaCliente, StatusRegiao
+from .models import Unidade, Bairro, Ocorrencia, DataSolicitacao, Parecer, SituacaoAguaCliente, StatusRegiao, StatusOcorrencia
 
 # Register your models here.
 admin.site.register(Unidade)
@@ -13,3 +13,4 @@ admin.site.register(DataSolicitacao)
 admin.site.register(Parecer)
 admin.site.register(SituacaoAguaCliente)
 admin.site.register(StatusRegiao)
+admin.site.register(StatusOcorrencia)

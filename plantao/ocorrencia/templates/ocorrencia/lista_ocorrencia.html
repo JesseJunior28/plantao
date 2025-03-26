@@ -79,8 +79,9 @@
                 <th>OS</th>
                 <th>Solicitação</th>
                 <th>Parecer</th>
-                <th>Status</th>
+                <th>Status Região</th>
                 <th>Situação</th>
+                <th>Status da Ocorrência</th>
                 <th>Ações</th>
             </tr>
         </thead>
@@ -94,7 +95,8 @@
                     <td>{{ ocorrencia.data_solicitacao|date:"d/m/Y"|default:"" }}</td>  
                     <td>{{ ocorrencia.parecer|default:"" }}</td>  
                     <td>{{ ocorrencia.status_regiao|default:"" }}</td> 
-                    <td>{{ ocorrencia.situacao_agua_cliente|default:"" }}</td>  
+                    <td>{{ ocorrencia.situacao_agua_cliente|default:"" }}</td> 
+                    <td>{{ ocorrencia.status_ocorrencia|default:"" }}</td>
                     <td>
                     <div class="btn-group" role="group" >
                         <a href="{% url 'editar_ocorrencia' ocorrencia.id %}" class="btn btn-secondary btn-sm">Editar</a>

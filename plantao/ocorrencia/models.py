@@ -60,7 +60,12 @@ class StatusOcorrencia(models.Model):
         return self.descricao  
 
 class Comentario(models.Model):
-    descricao = models.CharField(max_length=200)  
+    ocorrencia = models.ForeignKey('Ocorrencia', on_delete=models.CASCADE, related_name='comentarios')
+    texto = models.TextField()
+    data_criacao = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Comentário de {self.autor} em {self.data_criacao.strftime('%d/%m/%Y %H:%M')}"
 
 class Ocorrencia(models.Model):
     ordem_de_servico = models.IntegerField()

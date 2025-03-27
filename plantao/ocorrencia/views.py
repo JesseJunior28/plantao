@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import Ocorrencia 
-from .forms import OcorrenciaForm
+from .forms import OcorrenciaForm, ComentarioForm
 
 
 # Create your views here.
@@ -39,3 +39,22 @@ def excluir_ocorrencia(request, id):
     ocorrencia.delete()
     return redirect('lista_ocorrencia')
 
+def comentario_ocorrencia(request, id):
+    ocorrencia = get_object_or_404(Ocorrencia, id=id)
+    comentarios = ocorrencia.comentarios.all()
+
+    if request.method == 'POST':
+        form = ComentarioForm(request.POST)
+        if form.is_valid():
+            comentario = form.save(commit=False)
+            comentario.ocorrencia = ocorrencia
+            comentario.save()
+            return redirect('comentario_ocorrencia', id=ocorrencia.id)  # Redireciona para a mesma página, mostrando o novo comentário
+    else:
+        form = ComentarioForm()
+
+    return render(request, 'ocorrencia/comentario_ocorrencia.html', {
+        'ocorrencia': ocorrencia,
+        'comentarios': comentarios,
+        'form': form
+    })

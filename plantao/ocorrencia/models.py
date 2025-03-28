@@ -71,12 +71,12 @@ class Ocorrencia(models.Model):
     ordem_de_servico = models.IntegerField()
     matricula = models.IntegerField()
     bairro = models.ForeignKey(Bairro, on_delete=models.CASCADE, related_name="ocorrencias")
-    data_solicitacao = models.DateField()
+    data_solicitacao = models.DateTimeField()
     parecer = models.ForeignKey(Parecer, on_delete=models.SET_NULL, null=True, related_name="ocorrencias")
     situacao_agua_cliente = models.ForeignKey(SituacaoAguaCliente, on_delete=models.SET_NULL,null=True, related_name="ocorrencias")
     status_regiao = models.ForeignKey(StatusRegiao, on_delete=models.SET_NULL, null=True, related_name="ocorrencias")
-    status_ocorrencia = models.ForeignKey(StatusOcorrencia, on_delete=models.SET_NULL, null=True, related_name="ocorrencias")
-    descricao = models.TextField()
+    status = models.ForeignKey(StatusOcorrencia, on_delete=models.SET_NULL, null=True, related_name="ocorrencias")
+    descricao = models.TextField(blank=True, null=True)
 
     def __str__(self):
         ordem_codigo = self.ordem_de_servico if self.ordem_de_servico else "Sem OS"

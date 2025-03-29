@@ -1,8 +1,9 @@
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import get_object_or_404, render, redirect, reverse
 from .models import Ocorrencia 
-from .forms import OcorrenciaForm, ComentarioForm, OcorrenciaFilterForm, Comentario
+from .forms import OcorrenciaForm, ComentarioForm, OcorrenciaFilterForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from urllib.parse import urlencode
 
 
 @login_required
@@ -10,7 +11,7 @@ def lista_ocorrencia(request):
     ocorrencias = Ocorrencia.objects.all()
     em_aberto = ocorrencias.filter(status=Ocorrencia.StatusOcorrencia.EM_ABERTO).count()
     form = OcorrenciaFilterForm(request.GET, initial={'status': Ocorrencia.StatusOcorrencia.EM_ABERTO})
-
+    print(request.GET)
     if request.GET.get('bairro'):
         ocorrencias = ocorrencias.filter(bairro=request.GET.get('bairro'))
     if request.GET.get('parecer'):
@@ -24,8 +25,11 @@ def lista_ocorrencia(request):
     if request.GET.get('status', Ocorrencia.StatusOcorrencia.EM_ABERTO):
         status = request.GET.get('status', Ocorrencia.StatusOcorrencia.EM_ABERTO)
         ocorrencias = ocorrencias.filter(status=status)
-
-    return render(request, "ocorrencia/lista_ocorrencia.html", {"ocorrencias": ocorrencias, 'form': form, 'em_aberto': em_aberto})
+    
+    context = {"ocorrencias": ocorrencias, 'form': form, 'em_aberto': em_aberto, 'ocorrencia_id': int(request.GET.get('ocorrencia_id', '0')) }
+    
+    return render(
+        request, "ocorrencia/lista_ocorrencia.html", context)
 
 @login_required
 def cadastrar_ocorrencia(request):
@@ -68,8 +72,11 @@ def adicionar_comentario(request):
     if request.method == 'POST':
         form = ComentarioForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('lista_ocorrencia')
+            comentario = form.save()
+            base_url = reverse('lista_ocorrencia') # Obtém a URL base
+            query_string = urlencode({'ocorrencia_id': comentario.ocorrencia.id }) # Cria a query string
+            url = f'{base_url}?{query_string}'
+            return redirect(url)
         return redirect('lista_ocorrencia')
     return redirect('lista_ocorrencia')
 

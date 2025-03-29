@@ -1,7 +1,5 @@
 from django.db import models
-
-
-# Create your models here.
+from django.contrib.auth.models import User
 
 
 class Unidade(models.Model):
@@ -52,31 +50,45 @@ class SituacaoAguaCliente(models.Model):
 
     def __str__(self):
         return self.descricao
-    
-class StatusOcorrencia(models.Model):
-    descricao = models.CharField(max_length=10)
 
-    def __str__(self):
-        return self.descricao  
 
 class Comentario(models.Model):
     ocorrencia = models.ForeignKey('Ocorrencia', on_delete=models.CASCADE, related_name='comentarios')
-    texto = models.TextField()
-    data_criacao = models.DateTimeField(auto_now_add=True)
-
+    texto = models.TextField('Texto')
+    data_criacao = models.DateTimeField('Criado em', auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="comentarios", verbose_name="Plantonista")
     def __str__(self):
         return f"Comentário de {self.autor} em {self.data_criacao.strftime('%d/%m/%Y %H:%M')}"
 
+
 class Ocorrencia(models.Model):
-    ordem_de_servico = models.IntegerField()
-    matricula = models.IntegerField()
+    class StatusOcorrencia(models.TextChoices):
+        EM_ABERTO = 'EM_ABERTO', 'Em Aberto'
+        CONCLUIDA = 'CONCLUIDA', 'Concluida'
+    ordem_de_servico = models.IntegerField('OS')
+    matricula = models.IntegerField('Matricula')
     bairro = models.ForeignKey(Bairro, on_delete=models.CASCADE, related_name="ocorrencias")
-    data_solicitacao = models.DateTimeField()
-    parecer = models.ForeignKey(Parecer, on_delete=models.SET_NULL, null=True, related_name="ocorrencias")
-    situacao_agua_cliente = models.ForeignKey(SituacaoAguaCliente, on_delete=models.SET_NULL,null=True, related_name="ocorrencias")
-    status_regiao = models.ForeignKey(StatusRegiao, on_delete=models.SET_NULL, null=True, related_name="ocorrencias")
-    status = models.ForeignKey(StatusOcorrencia, on_delete=models.SET_NULL, null=True, related_name="ocorrencias")
-    descricao = models.TextField(blank=True, null=True)
+    data_solicitacao = models.DateTimeField('Data da Solicitação')
+    parecer = models.ForeignKey(Parecer, on_delete=models.SET_NULL, null=True, related_name="ocorrencias", verbose_name="Parecer")
+    situacao_agua_cliente = models.ForeignKey(SituacaoAguaCliente, on_delete=models.SET_NULL,null=True, related_name="ocorrencias", verbose_name="Situação da Água do Cliente")
+    status_regiao = models.ForeignKey(StatusRegiao, on_delete=models.SET_NULL, null=True, related_name="ocorrencias", verbose_name="Status da Região")
+    plantonista = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="ocorrencias", verbose_name="Plantonista")
+    status = models.CharField(
+        'Status',
+        max_length=10,
+        choices=StatusOcorrencia.choices,
+        default=StatusOcorrencia.EM_ABERTO,
+    )
+    descricao = models.TextField('Descrição',blank=True, null=True)
+
+    @property
+    def em_aberto(self):
+        return self.status == self.StatusOcorrencia.EM_ABERTO
+    
+    @property
+    def conluida(self):
+        return self.status == self.StatusOcorrencia.CONCLUIDA
+        
 
     def __str__(self):
         ordem_codigo = self.ordem_de_servico if self.ordem_de_servico else "Sem OS"

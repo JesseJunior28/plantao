@@ -1,10 +1,14 @@
 from django.urls import path
-from . views import lista_ocorrencia, cadastrar_ocorrencia, editar_ocorrencia, excluir_ocorrencia, comentario_ocorrencia
+from ocorrencia.views import lista_ocorrencia, cadastrar_ocorrencia,\
+    editar_ocorrencia, excluir_ocorrencia, adicionar_comentario,\
+    concluir_ocorrencia
 
 urlpatterns = [
-    path('lista/', lista_ocorrencia, name='lista_ocorrencia'),
+    path('', lista_ocorrencia, name='lista_ocorrencia'),
     path('cadastrar/', cadastrar_ocorrencia, name='cadastrar_ocorrencia'),
-    path('editar/<int:id>/', editar_ocorrencia, name='editar_ocorrencia'),
-    path('excluir/<int:id>/', excluir_ocorrencia, name='excluir_ocorrencia'),
-    path('comentario/<int:id>/', comentario_ocorrencia, name='comentario_ocorrencia')
+    path('editar/<int:ocorrencia_id>/', editar_ocorrencia, name='editar_ocorrencia'),
+    path('excluir/<int:ocorrencia_id>/', excluir_ocorrencia, name='excluir_ocorrencia'),
+    # path('comentario/<int:id>/', comentario_ocorrencia, name='comentario_ocorrencia'),
+    path('adicionar_comentario/', adicionar_comentario, name='adicionar_comentario'),
+    path('concluir/<int:ocorrencia_id>/', concluir_ocorrencia, name='concluir_ocorrencia'),
 ]

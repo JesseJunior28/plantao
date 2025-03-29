@@ -76,6 +76,7 @@ def adicionar_comentario(request):
             base_url = reverse('lista_ocorrencia') # Obtém a URL base
             query_string = urlencode({'ocorrencia_id': comentario.ocorrencia.id }) # Cria a query string
             url = f'{base_url}?{query_string}'
+            messages.success(request, f'Comentário adicionado com sucesso!')
             return redirect(url)
         return redirect('lista_ocorrencia')
     return redirect('lista_ocorrencia')

@@ -1,17 +1,33 @@
 from django.shortcuts import get_object_or_404, render, redirect, reverse
-from .models import Ocorrencia 
-from .forms import OcorrenciaForm, ComentarioForm, OcorrenciaFilterForm
+from .models import Ocorrencia, Plantao
+from .forms import OcorrenciaForm, ComentarioForm, OcorrenciaFilterForm, PlantaoForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from urllib.parse import urlencode
+from datetime import date, time, datetime
 
 
 @login_required
 def lista_ocorrencia(request):
+
+    agora = datetime.now().time()
+    hoje = datetime.now().date()
+    
+    if time(6, 0) <= agora < time(18, 0):
+
+        plantao = Plantao.objects.filter(inicio__date=hoje, turno=Plantao.TurnoPlantao.DIURNO).first()
+    else:
+        plantao = Plantao.objects.filter(inicio__date=hoje, turno=Plantao.TurnoPlantao.NOTURNO).first()
+
+    print(plantao)
+    if not plantao:
+        messages.warning(request, f'Nenhum plantão iniciado, favor iniciar o plantão!')
+        return redirect('iniciar_plantao')
+
     ocorrencias = Ocorrencia.objects.all()
     em_aberto = ocorrencias.filter(status=Ocorrencia.StatusOcorrencia.EM_ABERTO).count()
     form = OcorrenciaFilterForm(request.GET, initial={'status': Ocorrencia.StatusOcorrencia.EM_ABERTO})
-    print(request.GET)
+
     if request.GET.get('bairro'):
         ocorrencias = ocorrencias.filter(bairro=request.GET.get('bairro'))
     if request.GET.get('parecer'):
@@ -26,13 +42,30 @@ def lista_ocorrencia(request):
         status = request.GET.get('status', Ocorrencia.StatusOcorrencia.EM_ABERTO)
         ocorrencias = ocorrencias.filter(status=status)
     
-    context = {"ocorrencias": ocorrencias, 'form': form, 'em_aberto': em_aberto, 'ocorrencia_id': int(request.GET.get('ocorrencia_id', '0')) }
+    context = {
+        "ocorrencias": ocorrencias,
+        "plantao": plantao,
+        'form': form,
+        'em_aberto': em_aberto,
+        'ocorrencia_id': int(request.GET.get('ocorrencia_id', '0'))
+    }
     
-    return render(
-        request, "ocorrencia/lista_ocorrencia.html", context)
+    return render(request, "ocorrencia/lista_ocorrencia.html", context)
 
 @login_required
 def cadastrar_ocorrencia(request):
+
+    agora = datetime.now().time()
+    hoje = datetime.now().date()
+    
+    if time(6, 0) <= agora < time(18, 0):
+        plantao = Plantao.objects.filter(inicio__date=hoje, turno=Plantao.TurnoPlantao.DIURNO).first()
+    else:
+        plantao = Plantao.objects.filter(inicio__date=hoje, turno=Plantao.TurnoPlantao.NOTURNO).first()
+
+    if not plantao:
+        messages.warning(request, f'Nenhum plantão iniciado, favor iniciar o plantão!')
+        return redirect('iniciar_plantao')
     
 
     if request.method == "POST":
@@ -42,7 +75,7 @@ def cadastrar_ocorrencia(request):
             messages.success(request, f'Ocorrência {ocorrencia.ordem_de_servico} cadastrada com sucesso!')
             return redirect("lista_ocorrencia")
     else:
-        form = OcorrenciaForm(initial={'plantonista': request.user})
+        form = OcorrenciaForm(initial={'plantonista': request.user, 'plantao': plantao})
         
     return render(request, "ocorrencia/cadastrar_ocorrencia.html", {"form": form})
 
@@ -90,3 +123,20 @@ def concluir_ocorrencia(request, ocorrencia_id):
     messages.success(request, f'Ocorrência {ocorrencia.ordem_de_servico} concluída com sucesso!')
     
     return redirect('lista_ocorrencia')
+
+
+@login_required
+def iniciar_plantao(request):
+    if request.method == 'POST':
+        form = PlantaoForm(request.POST)
+        if form.is_valid():
+            plantao = form.save(commit=False)
+            plantao.usuario = request.user
+            plantao.save()
+            messages.success(request,"Plantao iniciado com sucesso!")
+
+            # turno = request.POST.get('turno')
+            # inicio = request.POST.get('inicio')
+            # Plantao.objects.create(usuario=request.user, turno=turno, inicio=inicio)
+        return redirect('lista_ocorrencia')
+    return render(request, 'ocorrencia/plantao.html')

@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.utils import timezone
 
 class Unidade(models.Model):
     nome = models.CharField(max_length=100, unique=True) 
@@ -61,6 +61,23 @@ class Comentario(models.Model):
         return f"Comentário de {self.autor} em {self.data_criacao.strftime('%d/%m/%Y %H:%M')}"
 
 
+
+class Plantao(models.Model):
+    class TurnoPlantao(models.TextChoices):
+        DIURNO = 'DIURNO', 'Diurno'
+        NOTURNO = 'NOTURNO', 'Noturno'
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    inicio = models.DateTimeField(default=timezone.now)
+    turno = models.CharField(max_length=10, choices=TurnoPlantao.choices)
+
+    class Meta:
+        verbose_name_plural = 'Plantões'
+        verbose_name = 'Plantão'
+
+    def __str__(self):
+        return f'{self.usuario.username} - {self.inicio.strftime('%d/%m/%Y %H:%M') } - {self.turno}'
+
+
 class Ocorrencia(models.Model):
     class StatusOcorrencia(models.TextChoices):
         EM_ABERTO = 'EM_ABERTO', 'Em Aberto'
@@ -73,6 +90,7 @@ class Ocorrencia(models.Model):
     situacao_agua_cliente = models.ForeignKey(SituacaoAguaCliente, on_delete=models.SET_NULL,null=True, related_name="ocorrencias", verbose_name="Situação da Água do Cliente")
     status_regiao = models.ForeignKey(StatusRegiao, on_delete=models.SET_NULL, null=True, related_name="ocorrencias", verbose_name="Status da Região")
     plantonista = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="ocorrencias", verbose_name="Plantonista")
+    plantao = models.ForeignKey(Plantao, on_delete=models.SET_NULL, null=True, related_name="ocorrencias", verbose_name="Plantao")
     status = models.CharField(
         'Status',
         max_length=10,

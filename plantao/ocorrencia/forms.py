@@ -1,5 +1,6 @@
 from django import forms
-from .models import Ocorrencia, DataSolicitacao, Parecer, SituacaoAguaCliente, Comentario
+from .models import Ocorrencia, DataSolicitacao, Parecer,\
+    SituacaoAguaCliente, Comentario, Plantao
 from django.contrib.admin.widgets import AdminDateWidget
 
 class OcorrenciaForm(forms.ModelForm):
@@ -13,6 +14,7 @@ class OcorrenciaForm(forms.ModelForm):
             "situacao_agua_cliente": forms.Select(attrs={'class': 'form-control'}),
             "status_regiao": forms.Select(attrs={'class': 'form-control'}),
             "plantonista": forms.HiddenInput,
+            "plantao": forms.HiddenInput,
         }
 
 
@@ -68,3 +70,13 @@ class ComentarioForm(forms.ModelForm):
     class Meta:
         model = Comentario
         fields = ['texto', 'user', 'ocorrencia']
+
+
+class PlantaoForm(forms.ModelForm):
+    class Meta: 
+        model = Plantao
+        fields = ['turno', 'inicio']
+        widgets = {
+            "turno": forms.Select(attrs={'class': 'form-control'}),
+            "inicio": forms.TextInput(attrs={'class': 'form-control', 'type': 'datetimee-local'}),
+        }

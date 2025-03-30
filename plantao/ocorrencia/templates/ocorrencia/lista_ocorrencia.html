@@ -8,12 +8,6 @@ crispy_forms_tags %} {% block conteudo %}
     </div>
   </div>
 
-  {% if messages %}
-    {% for message in messages %}
-        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-    {% endfor %}
-  {% endif %}
-
   <div class="row mt-3 mb-2">
     <div class="col-4">
       <div class="d-flex justify-content-between align-items-start mb-2">
@@ -30,7 +24,7 @@ crispy_forms_tags %} {% block conteudo %}
     <div class="col-4">
       <div class="d-flex justify-content-between align-items-start mb-2">
         <span><strong>DATA/HORA DE INÍCIO:</strong></span>
-        <span>25/03/2025, 11:06:39</span>
+        <span>{{plantao.inicio|date:"d/m/Y h:i"|default:"" }}</span>
       </div>
 
       <div class="d-flex justify-content-between align-items-start mb-2">

@@ -207,7 +207,8 @@ crispy_forms_tags %} {% block conteudo %}
                         <div class="row mt-2">
                           <div class="col text-end">
                             <div class="btn-group" role="group">
-                              
+                              {% if ocorrencia.em_aberto %}
+
                               <a
                                 href="{% url 'editar_ocorrencia' ocorrencia.id %}"
                                 class="btn btn-secondary btn-sm"
@@ -221,6 +222,7 @@ crispy_forms_tags %} {% block conteudo %}
                                 Concluir
                               </button>
                               <button type="button" id="btnCommentModal" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#comentarioModal" data-ocorrencia="{{ocorrencia.id}}" >Inserir comentário</button>
+                              {% endif %}
                             </div>
                           </div>
                         </div>
@@ -324,10 +326,10 @@ crispy_forms_tags %} {% block conteudo %}
 {% endblock %}
 
 
+
 {% block scripts %}
-
+  
 <script>
-
   const comentarioModal = document.getElementById('concluirModal');
   const excluirModal = document.getElementById('excluirModal');
   const concluirForm = document.getElementById('concluirForm');
@@ -361,8 +363,8 @@ crispy_forms_tags %} {% block conteudo %}
   excluirModal.addEventListener('hidden.bs.modal', event => {
     inputCommentOccorrencia.value = '';
   });
-
+  
 </script>
-    
 
 {% endblock %}
+

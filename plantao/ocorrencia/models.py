@@ -75,7 +75,7 @@ class Plantao(models.Model):
         verbose_name = 'Plantão'
 
     def __str__(self):
-        return f'{self.usuario.username} - {self.inicio.strftime('%d/%m/%Y %H:%M') } - {self.turno}'
+        return f"{self.usuario.username} - {self.inicio.strftime('%d/%m/%Y %H:%M') } - {self.turno}"
 
 
 class Ocorrencia(models.Model):
